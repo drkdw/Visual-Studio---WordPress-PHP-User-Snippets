@@ -1,0 +1,75 @@
+{
+    "Wordpress Comment": {
+        "prefix": "wpcomment",
+        "body": [
+            "/**",
+            "* ",
+            "* ${1:This is my special comment.",
+            "* It's so special it requires multiple lines!}",
+            "*/",
+        ],
+        "description": "Creates a comment"
+    },
+    "Wordpress add_action": {
+        "prefix": "wpaction",
+        "body": [
+            "function $2(){",
+            "\t$0",
+            "}",
+            "",
+            "add_action('$1', '$2');"
+        ],
+        "description": "Creates add_action for WordPress"
+    },
+    "Wordpress shortcode": {
+        "prefix": "wpshortcode",
+        "body": [
+            "/**",
+            "* Shortcode description.",
+            " * How to use: [${2:shortcode_slug}]",
+            " *",
+            " * @param array \\$atts The shortcode attributes.",
+            " * @return string",
+            " */",
+            "function ${1:function_name}( \\$atts ) {",
+            "\tob_start();",
+            "\tinclude_once __DIR__ . '/php/${3:name}.php';",
+            "\treturn ob_get_clean();",
+            "}",
+            "add_shortcode( '${2:shortcode_slug}', '${1:function_name}' );",
+            "",
+        ],
+        "description": "Creates a WordPress shortcode for functions.php"
+    },
+    "WP Query": {
+        "prefix": "wpquery",
+        "body": [
+            "\\$args = array(",
+            "\t'post_type' => '${1:post}',",
+            "\t'posts_per_page' => '${2:-1}'",
+            ");",
+            "",
+            "\\$the_query = new WP_Query( \\$args );",
+            "",
+            "if ( \\$the_query->have_posts() ) {",
+            "\twhile ( \\$the_query->have_posts() ) {",
+            "\t\t\\$the_query->the_post();",
+            "\t\t$0",
+            "\t}",
+            "",
+            "\t//Restore original post data",
+            "\twp_reset_postdata();",
+            "} else {",
+            "\t//No posts found",
+            "__('Woops, no posts found!','flux');",
+            "}"
+        ]
+    },
+    "ignore": {
+        "prefix": "ignore",
+        "body": [
+            "// @codingStandardsIgnoreLine",
+        ],
+        "description": "Ignore PHP/WP Beautify snippet for php"
+    },
+}
